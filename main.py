@@ -6,8 +6,13 @@ def start(bot, update):
 def hello(bot, update):
     update.message.reply_text(
         'Hello {}'.format(update.message.from_user.first_name))
+    print "new update\n\r"
 
-updater = Updater('')
+f = open(".token", "r") #opens file with name of "test.txt"
+token=f.read()
+print token
+updater = Updater(token.rstrip("\n\r"))
+f.close()
 
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CommandHandler('hello', hello))
