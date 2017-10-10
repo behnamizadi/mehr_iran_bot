@@ -2,7 +2,7 @@
 import logging
 import telegram
 import time
-from telegram import (InlineKeyboardButton,InlineKeyboardMarkup,ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from telegram import (KeyboardButton,InlineKeyboardButton,InlineKeyboardMarkup,ReplyKeyboardMarkup, ReplyKeyboardRemove)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
 	ConversationHandler,CallbackQueryHandler,InlineQueryHandler,ChosenInlineResultHandler)
 import gettext
@@ -21,7 +21,8 @@ START,HAGHIGHI,HAGHIGHI_MABLAGH,PEYVAND1 \
 	,HOGHOOGHI_MOSHAREKAT=range(10)
 
 
-context=""
+
+
 def start(bot, update):
 	logger.info("function: start")
 	keyboard = [[
@@ -41,9 +42,13 @@ def haghighi(bot, update):
                           chat_id=query.from_user.id)
                           
 def hoghooghi(bot, update):
-	logger.info("haghigh")
+	query = update.callback_query
+	KEYBOARD_MAIN = ReplyKeyboardMarkup([
+    [KeyboardButton(text=_("main_menu")),KeyboardButton(text=_("about_us"))],
+		], resize_keyboard = True)
+	logger.info("hoghooghi	")
 	bot.send_message(text=_("enter_mablagh"),
-                          chat_id=update.message.chat_id)
+                          chat_id=query.from_user.id,reply_markup=KEYBOARD_MAIN)
 
 def peyvand(bot,update):
 	query = update.callback_query
@@ -83,8 +88,7 @@ def main():
         entry_points=[CommandHandler('start', start)],
 
         states={
-            START: [CallbackQueryHandler(haghighi),
-				RegexHandler(str(HOGHOOGHI),hoghooghi)
+            START: [CallbackQueryHandler(hoghooghi)
             ],
 
             HAGHIGHI: [MessageHandler(Filters.text, peyvand)],
