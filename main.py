@@ -33,10 +33,9 @@ def typing(bot, chatid):
 def start(bot, update):
 	logger.info("function: start")
 	keyboard = [[
-		InlineKeyboardButton(_("haghighi"), callback_data=str(HAGHIGHI)),
-		InlineKeyboardButton(_("hoghooghi"), callback_data=str(HOGHOOGHI))
-		]]
-	reply_markup = InlineKeyboardMarkup(keyboard)
+		InlineKeyboardButton(_("haghighi"), callback_data=str(HAGHIGHI))],
+		[InlineKeyboardButton(_("hoghooghi"), callback_data=str(HOGHOOGHI))]]
+	reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
 	typing(bot, update.message.chat_id)
 	update.message.reply_text(_("wellcome"), reply_markup=reply_markup)
 	return START
@@ -61,7 +60,7 @@ def haghighi(bot, update):
 		InlineKeyboardButton(_("bavar"), callback_data=str(BAVAR)),
 		InlineKeyboardButton(_("vasighe"), callback_data=str(VASIGHE))
 		]]
-	reply_markup = InlineKeyboardMarkup(keyboard)
+	reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
 	query = update.callback_query
 	chat_id=query.from_user.id
 	typing(bot, chat_id)
