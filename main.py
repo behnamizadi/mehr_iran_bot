@@ -18,10 +18,17 @@ logger = logging.getLogger(__name__)
 
 START,HAGHIGHI,HAGHIGHI_MABLAGH,PEYVAND1 \
 	,PEYVAND2,PEYVAND1_SALANEH,PEYVAND2_SALANEH,HOGHOOGHI,HOGHOOGHI_ETEBAR  \
-	,HOGHOOGHI_MOSHAREKAT=range(10)
+	,HOGHOOGHI_MOSHAREKAT,EMTIAZI,TADAVOM,ANGIZESH,BAVAR,VASIGHE,CHOOSE_HAGHIGHI \
+	=range(16)
 
+KEYBOARD_MAIN = ReplyKeyboardMarkup([
+    [KeyboardButton(text=_("/start")),KeyboardButton(text=_("about_us"))],
+		], resize_keyboard = True)
 
-
+def typing(bot, chatid):
+	bot.send_chat_action(chat_id=chatid, action=telegram.ChatAction.TYPING)
+	time.sleep(1.5)
+	return
 
 def start(bot, update):
 	logger.info("function: start")
@@ -30,27 +37,47 @@ def start(bot, update):
 		InlineKeyboardButton(_("hoghooghi"), callback_data=str(HOGHOOGHI))
 		]]
 	reply_markup = InlineKeyboardMarkup(keyboard)
-	bot.send_chat_action(chat_id=update.message.chat_id, action=telegram.ChatAction.TYPING)
-	time.sleep(1.5)
+	typing(bot, update.message.chat_id)
 	update.message.reply_text(_("wellcome"), reply_markup=reply_markup)
 	return START
+	
+def choose_shakhsiat(bot, update):
+	query=update.callback_query
+	choose=query.data
+	if choose==str(HAGHIGHI):
+		haghighi(bot,update)
+	if choose==str(HOGHOOGHI):
+		hoghooghi(bot,update)
+	
 
 def haghighi(bot, update):
+	logger.info("function: start")
+	keyboard = [[
+		InlineKeyboardButton(_("emtiazi"), callback_data=str(EMTIAZI)),
+		InlineKeyboardButton(_("peyvand1"), callback_data=str(PEYVAND1)),
+		InlineKeyboardButton(_("peyvand2"), callback_data=str(PEYVAND2)),
+		InlineKeyboardButton(_("tadavom"), callback_data=str(TADAVOM)),
+		InlineKeyboardButton(_("angizesh"), callback_data=str(ANGIZESH)),
+		InlineKeyboardButton(_("bavar"), callback_data=str(BAVAR)),
+		InlineKeyboardButton(_("vasighe"), callback_data=str(VASIGHE))
+		]]
+	reply_markup = InlineKeyboardMarkup(keyboard)
 	query = update.callback_query
-	logger.info("haghigh")
-	bot.send_message(text=_("enter_mablagh"),
-                          chat_id=query.from_user.id)
+	chat_id=query.from_user.id
+	typing(bot, chat_id)
+	bot.send_message(text=_("choose_plan"),chat_id=chat_id,reply_markup=reply_markup)
+	return CHOOSE_HAGHIGHI
                           
 def hoghooghi(bot, update):
 	query = update.callback_query
-	KEYBOARD_MAIN = ReplyKeyboardMarkup([
-    [KeyboardButton(text=_("main_menu")),KeyboardButton(text=_("about_us"))],
-		], resize_keyboard = True)
+	chat_id=query.from_user.id
+	typing(bot, chat_id)
 	logger.info("hoghooghi	")
 	bot.send_message(text=_("enter_mablagh"),
                           chat_id=query.from_user.id,reply_markup=KEYBOARD_MAIN)
 
 def peyvand(bot,update):
+	typing(bot, update)
 	query = update.callback_query
 	bot.send_message(text=_("enter_mablagh"),
                           chat_id=update.message.chat_id)
@@ -88,7 +115,7 @@ def main():
         entry_points=[CommandHandler('start', start)],
 
         states={
-            START: [CallbackQueryHandler(hoghooghi)
+            START: [CallbackQueryHandler(choose_shakhsiat)
             ],
 
             HAGHIGHI: [MessageHandler(Filters.text, peyvand)],
@@ -96,7 +123,10 @@ def main():
 			HOGHOOGHI: [MessageHandler(Filters.text,error)],
         },
 
-        fallbacks=[CommandHandler('cancel', cancel)]
+        fallbacks=[CommandHandler('cancel', cancel),
+					CommandHandler('start',start)
+					
+					]
     )
 
 	dp.add_handler(conv_handler)
