@@ -51,15 +51,15 @@ def choose_shakhsiat(bot, update):
 
 def haghighi(bot, update):
 	logger.info("function: start")
-	keyboard = [[
-		InlineKeyboardButton(_("emtiazi"), callback_data=str(EMTIAZI)),
-		InlineKeyboardButton(_("peyvand1"), callback_data=str(PEYVAND1)),
-		InlineKeyboardButton(_("peyvand2"), callback_data=str(PEYVAND2)),
-		InlineKeyboardButton(_("tadavom"), callback_data=str(TADAVOM)),
-		InlineKeyboardButton(_("angizesh"), callback_data=str(ANGIZESH)),
-		InlineKeyboardButton(_("bavar"), callback_data=str(BAVAR)),
-		InlineKeyboardButton(_("vasighe"), callback_data=str(VASIGHE))
-		]]
+	keyboard = [
+		[InlineKeyboardButton(_("emtiazi"), callback_data=str(EMTIAZI))],
+		[InlineKeyboardButton(_("peyvand1"), callback_data=str(PEYVAND1)),
+		InlineKeyboardButton(_("peyvand2"), callback_data=str(PEYVAND2))],
+		[InlineKeyboardButton(_("tadavom"), callback_data=str(TADAVOM)),
+		InlineKeyboardButton(_("angizesh"), callback_data=str(ANGIZESH))],
+		[InlineKeyboardButton(_("bavar"), callback_data=str(BAVAR))],
+		[InlineKeyboardButton(_("vasighe"), callback_data=str(VASIGHE))]
+		]
 	reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
 	query = update.callback_query
 	chat_id=query.from_user.id
