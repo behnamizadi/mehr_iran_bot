@@ -47,7 +47,25 @@ def choose_shakhsiat(bot, update):
 		haghighi(bot,update)
 	if choose==str(HOGHOOGHI):
 		hoghooghi(bot,update)
-	
+
+def choose_haghighi(bot, update):
+	logger.info("choose haghighi")
+	query=update.callback_query
+	choose=query.data
+	if choose==str(EMTIAZI):
+		emtiazi(bot,update)
+	if choose==str(PEYVAND1):
+		peyvand1(bot,update)
+	if choose==str(PEYVAND2):
+		peyvand2(bot,update)	
+	if choose==str(TADAVOM):
+		tadavom(bot,update)	
+	if choose==str(ANGIZESH):
+		angizesh(bot,update)
+	if choose==str(BAVAR):
+		bavar(bot,update)
+	if choose==str(VASIGHE):
+		vasighe(bot,update)	
 
 def haghighi(bot, update):
 	logger.info("function: start")
@@ -64,10 +82,10 @@ def haghighi(bot, update):
 	query = update.callback_query
 	chat_id=query.from_user.id
 	typing(bot, chat_id)
-	bot.send_message(text=_("choose_plan"),chat_id=chat_id,reply_markup=reply_markup)
+	bot.send_message(text=_("choose_plan_haghighi"),chat_id=chat_id,reply_markup=reply_markup)
 	return CHOOSE_HAGHIGHI
 
-def
+
                           
 def hoghooghi(bot, update):
 	query = update.callback_query
@@ -77,13 +95,59 @@ def hoghooghi(bot, update):
 	bot.send_message(text=_("enter_mablagh"),
                           chat_id=query.from_user.id,reply_markup=KEYBOARD_MAIN)
 
-def peyvand(bot,update):
+def emtiazi(bot,update):
+	query = update.callback_query
+	chat_id=query.from_user.id
+	typing(bot, update)
+	query = update.callback_query
+	bot.send_message(text=_("emtiazi_des"),
+                          chat_id=query.from_user.id)
+def peyvand1(bot,update):
+	query = update.callback_query
+	chat_id=query.from_user.id
+	typing(bot, update)
+	query = update.callback_query
+	bot.send_message(text=_("peyvand1_des"),
+                          chat_id=query.from_user.id)
+
+def peyvand2(bot,update):
+	query = update.callback_query
+	chat_id=query.from_user.id
+	typing(bot, update)
+	query = update.callback_query
+	bot.send_message(text=_("peyvand2_des"),
+                          chat_id=query.from_user.id)
+                                           
+def tadavom(bot,update):
+	query = update.callback_query
+	chat_id=query.from_user.id
+	typing(bot, update)
+	query = update.callback_query
+	bot.send_message(text=_("tadavom_des"),
+                          chat_id=query.from_user.id)
+                          
+def angizesh(bot,update):
+	typing(bot, update)
+	query = update.callback_query
+	bot.send_message(text=_("angizesh_des"),
+                          chat_id=query.from_user.id)                                                                            
+	                         
+def bavar(bot,update):
+	query = update.callback_query
+	chat_id=query.from_user.id
+	typing(bot, update)
+	query = update.callback_query
+	bot.send_message(text=_("bavar_des"),
+                          chat_id=query.from_user.id)                                                                            
+	                                                   
+def vasighe(bot,update):
+	query = update.callback_query
+	chat_id=query.from_user.id
 	typing(bot, update)
 	query = update.callback_query
 	bot.send_message(text=_("enter_mablagh"),
-                          chat_id=update.message.chat_id)
+                          chat_id=query.from_user.id)                                                                            
 	                         
-                          
 def echo(bot, update):
 	update.message.reply_text(update.message.text,parse_mode=telegram.ParseMode.HTML)
 
@@ -119,11 +183,9 @@ def main():
             START: [
 				CallbackQueryHandler(choose_shakhsiat)
             ],
-
             CHOOSE_HAGHIGHI: [
 				CallbackQueryHandler(choose_haghighi)
 				],
-
 			HOGHOOGHI: [MessageHandler(Filters.text,error)],
         },
 
