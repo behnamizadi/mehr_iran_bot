@@ -1,14 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <behnamizadi@yahoo.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2017-10-10 20:16+IRST\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: FULL NAME <behnamizadi@yahoo.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
@@ -28,3 +27,6 @@ msgstr "سلام. من شمارو در مورد خدمات و تسهیلات ب�
 
 msgid "enter_mablagh"
 msgstr "لطفا مبلغ را وارد کنید."
+
+msgid "emtiazi_description"
+msgstr "تسهیلات امتیازی به گردش حساب و کارکرد آن طبق ضرایب بانک تعلق می گیرد."

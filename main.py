@@ -66,6 +66,8 @@ def haghighi(bot, update):
 	typing(bot, chat_id)
 	bot.send_message(text=_("choose_plan"),chat_id=chat_id,reply_markup=reply_markup)
 	return CHOOSE_HAGHIGHI
+
+def
                           
 def hoghooghi(bot, update):
 	query = update.callback_query
@@ -114,10 +116,13 @@ def main():
         entry_points=[CommandHandler('start', start)],
 
         states={
-            START: [CallbackQueryHandler(choose_shakhsiat)
+            START: [
+				CallbackQueryHandler(choose_shakhsiat)
             ],
 
-            HAGHIGHI: [MessageHandler(Filters.text, peyvand)],
+            CHOOSE_HAGHIGHI: [
+				CallbackQueryHandler(choose_haghighi)
+				],
 
 			HOGHOOGHI: [MessageHandler(Filters.text,error)],
         },
