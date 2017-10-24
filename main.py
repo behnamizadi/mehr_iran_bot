@@ -13,192 +13,138 @@ translate = gettext.translation('messages', localedir, fallback=True)
 _ = translate.gettext
 
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level='INFO')
 logger = logging.getLogger(__name__)
 
 START,HAGHIGHI,HAGHIGHI_MABLAGH,PEYVAND1 \
 	,PEYVAND2,PEYVAND1_SALANEH,PEYVAND2_SALANEH,HOGHOOGHI,HOGHOOGHI_ETEBAR  \
-	,HOGHOOGHI_MOSHAREKAT,EMTIAZI,TADAVOM,ANGIZESH,BAVAR,VASIGHE,CHOOSE_HAGHIGHI \
-	=range(16)
+	,HOGHOOGHI_MOSHAREKAT,EMTIAZI,TADAVOM,ANGIZESH,BAVAR,VASIGHE,CHOOSE_HAGHIGHI =range(16)
 
 KEYBOARD_MAIN = ReplyKeyboardMarkup([
     [KeyboardButton(text=_("/start")),KeyboardButton(text=_("about_us"))],
 		], resize_keyboard = True)
 
+
+def callbackHandler(bot, update):
+	st=States()
+	getattr(States,update.callback_query.data)(st,bot,update)
+
 def typing(bot, chatid):
 	bot.send_chat_action(chat_id=chatid, action=telegram.ChatAction.TYPING)
-	time.sleep(1.5)
-	return
+	time.sleep(.1)
 
 def start(bot, update):
-	logger.info("function: start")
-	keyboard = [[
-		InlineKeyboardButton(_("haghighi"), callback_data=str(HAGHIGHI))],
-		[InlineKeyboardButton(_("hoghooghi"), callback_data=str(HOGHOOGHI))]]
-	reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
-	typing(bot, update.message.chat_id)
-	update.message.reply_text(_("wellcome"), reply_markup=reply_markup)
-	return START
-	
-def choose_shakhsiat(bot, update):
-	query=update.callback_query
-	choose=query.data
-	if choose==str(HAGHIGHI):
-		haghighi(bot,update)
-	if choose==str(HOGHOOGHI):
-		hoghooghi(bot,update)
-
-def choose_haghighi(bot, update):
-	logger.info("choose haghighi")
-	query=update.callback_query
-	choose=query.data
-	if choose==str(EMTIAZI):
-		emtiazi(bot,update)
-	if choose==str(PEYVAND1):
-		peyvand1(bot,update)
-	if choose==str(PEYVAND2):
-		peyvand2(bot,update)	
-	if choose==str(TADAVOM):
-		tadavom(bot,update)	
-	if choose==str(ANGIZESH):
-		angizesh(bot,update)
-	if choose==str(BAVAR):
-		bavar(bot,update)
-	if choose==str(VASIGHE):
-		vasighe(bot,update)	
-
-def haghighi(bot, update):
-	logger.info("function: start")
-	keyboard = [
-		[InlineKeyboardButton(_("emtiazi"), callback_data=str(EMTIAZI))],
-		[InlineKeyboardButton(_("peyvand1"), callback_data=str(PEYVAND1)),
-		InlineKeyboardButton(_("peyvand2"), callback_data=str(PEYVAND2))],
-		[InlineKeyboardButton(_("tadavom"), callback_data=str(TADAVOM)),
-		InlineKeyboardButton(_("angizesh"), callback_data=str(ANGIZESH))],
-		[InlineKeyboardButton(_("bavar"), callback_data=str(BAVAR))],
-		[InlineKeyboardButton(_("vasighe"), callback_data=str(VASIGHE))]
-		]
-	reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, chat_id)
-	bot.send_message(text=_("choose_plan_haghighi"),chat_id=chat_id,reply_markup=reply_markup)
-	return CHOOSE_HAGHIGHI
-
-
-                          
-def hoghooghi(bot, update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, chat_id)
-	logger.info("hoghooghi	")
-	bot.send_message(text=_("enter_mablagh"),
-                          chat_id=query.from_user.id,reply_markup=KEYBOARD_MAIN)
-
-def emtiazi(bot,update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("emtiazi_des"),
-                          chat_id=query.from_user.id)
-def peyvand1(bot,update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("peyvand1_des"),
-                          chat_id=query.from_user.id)
-
-def peyvand2(bot,update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("peyvand2_des"),
-                          chat_id=query.from_user.id)
-                                           
-def tadavom(bot,update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("tadavom_des"),
-                          chat_id=query.from_user.id)
-                          
-def angizesh(bot,update):
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("angizesh_des"),
-                          chat_id=query.from_user.id)                                                                            
-	                         
-def bavar(bot,update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("bavar_des"),
-                          chat_id=query.from_user.id)                                                                            
-	                                                   
-def vasighe(bot,update):
-	query = update.callback_query
-	chat_id=query.from_user.id
-	typing(bot, update)
-	query = update.callback_query
-	bot.send_message(text=_("enter_mablagh"),
-                          chat_id=query.from_user.id)                                                                            
-	                         
-def echo(bot, update):
-	update.message.reply_text(update.message.text,parse_mode=telegram.ParseMode.HTML)
-
-
-def cancel(bot, update):
-	user = update.message.from_user
-	logger.info("User %s canceled the conversation." % user.first_name)
-	update.message.reply_text('Bye! I hope we can talk again some day.',
-                              reply_markup=ReplyKeyboardRemove())
-	return ConversationHandler.END
+		logger.info("function: start")
+		keyboard = [[
+			InlineKeyboardButton(_("haghighi"), callback_data='haghighi')],
+			[InlineKeyboardButton(_("hoghooghi"), callback_data='hoghooghi')]]
+		reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
+		typing(bot, update.message.chat_id)
+		update.message.reply_text(_("wellcome"), reply_markup=reply_markup)
+		return START
 
 def error(bot, update, error):
 	logger.warn('Update "%s" caused error "%s"' % (update, error))
+		
+class States:
+	def haghighi(self,bot, update):
+		logger.info("function: haghighi")
+		keyboard = [
+			[InlineKeyboardButton(_("emtiazi"), callback_data='emtiazi')],
+			[InlineKeyboardButton(_("peyvand1"), callback_data='peyvand1'),
+			InlineKeyboardButton(_("peyvand2"), callback_data="peyvand2")],
+			[InlineKeyboardButton(_("tadavom"), callback_data="tadavom"),
+			InlineKeyboardButton(_("angizesh"), callback_data="angizesh")],
+			[InlineKeyboardButton(_("bavar"), callback_data="bavar")],
+				[InlineKeyboardButton(_("vasighe"), callback_data="vasighe")]
+			]
+		reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
+		query = update.callback_query
+		chat_id=query.from_user.id
+		bot.sendMessage(chat_id,text=_("choose_plan_haghighi"),reply_markup=reply_markup)
+		
+							  
+	def hoghooghi(self,bot, update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		bot.sendMessage(text=_("hoghooghi_des"),
+							  chat_id=query.from_user.id,reply_markup=KEYBOARD_MAIN)
+
+	def emtiazi(self,bot,update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		#typing(bot, update)
+		query = update.callback_query
+		bot.sendMessage(text=_("emtiazi_des"),
+							  chat_id=query.from_user.id)
+	def peyvand1(self,bot,update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		query = update.callback_query
+		bot.sendMessage(text=_("peyvand1_des"),
+							  chat_id=query.from_user.id)
+
+	def peyvand2(self,bot,update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		query = update.callback_query
+		bot.sendMessage(text=_("peyvand2_des"),
+							  chat_id=query.from_user.id)
+											   
+	def tadavom(self,bot,update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		query = update.callback_query
+		bot.sendMessage(text=_("tadavom_des"),
+							  chat_id=query.from_user.id)
+							  
+	def angizesh(self,bot,update):
+		query = update.callback_query
+		bot.sendMessage(text=_("angizesh_des"),
+							  chat_id=query.from_user.id)                                                                            
+								 
+	def bavar(self,bot,update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		query = update.callback_query
+		bot.sendMessage(text=_("bavar_des"),
+							  chat_id=query.from_user.id)                                                                            
+														   
+	def vasighe(self,bot,update):
+		query = update.callback_query
+		chat_id=query.from_user.id
+		query = update.callback_query
+		bot.sendMessage(text=_("enter_mablagh"),
+							  chat_id=query.from_user.id)                                                                            
+								 
+	def echo(self,bot, update):
+		update.message.reply_text(update.message.text,parse_mode=telegram.ParseMode.HTML)
+
+
+	def cancel(self,bot, update):
+		user = update.message.from_user
+		logger.info("User %s canceled the conversation." % user.first_name)
+		update.message.reply_text('Bye! I hope we can talk again some day.',
+								  reply_markup=ReplyKeyboardRemove())
+		return ConversationHandler.END
+
+
 
 def main():
 	logger.info("starting ... ")
 	#read telegram api token from file
 	f = open(".token", "r") #opens file with name of "test.txt"
 	token=f.read()
-	updater = Updater(token.rstrip("\n\r"))
 	f.close()
+	updater = Updater(token.rstrip("\n\r"))
+	updater.dispatcher.add_handler(CallbackQueryHandler(callbackHandler))
+	updater.dispatcher.add_handler(CommandHandler('start',start))
 	if(updater):
 		logger.info("token read scuccesfull!")
 
-    # Get the dispatcher to register handlers
-	dp = updater.dispatcher	
-
-    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
-	conv_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
-
-        states={
-            START: [
-				CallbackQueryHandler(choose_shakhsiat)
-            ],
-            CHOOSE_HAGHIGHI: [
-				CallbackQueryHandler(choose_haghighi)
-				],
-			HOGHOOGHI: [MessageHandler(Filters.text,error)],
-        },
-
-        fallbacks=[CommandHandler('cancel', cancel),
-					CommandHandler('start',start)
-					
-					]
-    )
-
-	dp.add_handler(conv_handler)
-
+    	
     # log all errors
-	dp.add_error_handler(error)
+	updater.dispatcher.add_error_handler(error)
 
     # Start the Bot
 	updater.start_polling()
