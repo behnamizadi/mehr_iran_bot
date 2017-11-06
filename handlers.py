@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 import telegram
 import time
@@ -14,6 +15,13 @@ _ = translate.gettext
 
 class Handlers:
 	@staticmethod
+	def textHandler(bot, update):
+		if update.message.text==_("start"):
+			Handlers.start(bot,update)
+		if update.message.text==_("aboutus"):
+			Handlers.aboutus(bot,update)
+	
+	@staticmethod
 	def start(bot, update):
 		logger.info("function: start")
 		keyboard = [[
@@ -21,7 +29,14 @@ class Handlers:
 			[InlineKeyboardButton(_("hoghooghi"), callback_data='hoghooghi')]]
 		reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
 		Handlers.typing(bot, update.message.chat_id)
-		update.message.reply_text(_("wellcome"), reply_markup=reply_markup)
+		KEYBOARD_MAIN = ReplyKeyboardMarkup([
+			[InlineKeyboardButton(_("start"),callback_data="/start"),InlineKeyboardButton(_("aboutus"),callback_data="about_us")],
+			], resize_keyboard = True)
+		update.message.reply_text(_("welcome"), reply_markup=KEYBOARD_MAIN)
+		update.message.reply_text(_("welcome2"), reply_markup=reply_markup)
+	
+	def aboutus(bot, update):
+		update.message.reply_text(_("aboutus_des"))
 	
 	@staticmethod
 	def haghighi(bot, update):
@@ -44,11 +59,15 @@ class Handlers:
 		
 	@staticmethod						  
 	def hoghooghi(bot, update):
-		global STATE
+		keyboard = [
+			[InlineKeyboardButton(_("etebar_jari"), callback_data='etebar_jari')],
+			[InlineKeyboardButton(_("hemayati"), callback_data='hemayati')]
+			]
+		reply_markup = InlineKeyboardMarkup(keyboard,resize_keyboard=True)
 		query = update.callback_query
 		chat_id=query.from_user.id
-		bot.sendMessage(text=_("hoghooghi_des")+str(STATE),
-							  chat_id=query.from_user.id,reply_markup=KEYBOARD_MAIN)
+		bot.sendMessage(text=_("hoghooghi_des"),
+							  chat_id=query.from_user.id,reply_markup=reply_markup)
 
 	@staticmethod
 	def emtiazi(bot,update):
@@ -114,10 +133,12 @@ class Handlers:
 		update.message.reply_text('Bye! I hope we can talk again some day.',
 								  reply_markup=ReplyKeyboardRemove())
 		return ConversationHandler.END
+	
 	@staticmethod
 	def typing( bot, chatid):
 		bot.send_chat_action(chat_id=chatid, action=telegram.ChatAction.TYPING)
 		time.sleep(.1)
+	
 	@staticmethod
 	def error(bot, update, error):
 		logger.warn('Update "%s" caused error "%s"' % (update, error))

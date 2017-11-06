@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <behnamizadi@yahoo.com>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2017-10-10 20:16+IRST\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <behnamizadi@yahoo.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: main.py:25
+msgid "haghighi"
+msgstr "تسهیلات فردی"
+
+msgid "start"
+msgstr "شروع"
+
+msgid "choose_plan_haghighi"
+msgstr "یکی از طرحهای زیر را انتخاب نمایید."
+
+msgid "hoghooghi"
+msgstr "تسهیلات برای شرکتها و سازمان ها و نهادهای عمومی"
+
+
+msgid "wellcome"
+msgstr "سلام. من شمارو در مورد خدمات و تسهیلات بانک قرض الحسنه مهر ایران راهنمایی میکنم."
+
+msgid "enter_mablagh"
+msgstr "لطفا مبلغ را وارد کنید."
+
+msgid "emtiazi"
+msgstr "تسهیلات امتیازی"
+
+msgid "peyvand1"
+msgstr "پیوند یک"
+msgid "peyvand2"
+msgstr "پیوند دو"
+
+msgid "angizesh"
+msgstr "انگیزش مهر"
+
+msgid "tadavom"
+msgstr "تداوم مهر"
+
+msgid "bavar"
+msgstr "رویش باور"
+
+msgid "vasighe"
+msgstr "وثیقه نقدی"
+
+msgid "emtiazi_des"
+msgstr "تسهیلات امتیازی به گردش حساب و کارکرد آن طبق ضرایب بانک تعلق می گیرد."
+
+msgid "bavar_des"
+msgstr "در طرح رویش باور با افتتاح حساب خود میتوانید در تامین اعتبار برای تسهیلات اشتغالزایی، ازدواج و درمان برای افراد نیازمند سهیم باشید."
+
+msgid "tadavom_des"
+msgstr "دراین طرح با پرداخت مبلغی اضافه بر اقساط تسهیلات خود میتوانید بلافاصله پس از پایان تسهیلات خود، تسهیلات جدید دریافت کنید."
+
+msgid "angizesh_des"
+msgstr "انگیزش مهر"
+
+msgid "peyvand1_des"
+msgstr "با پس از انداز ماهیانه، بعد از یک تا سه سال تسهیلات تا سقف چهارصد میلیون ریال با اقساط 36 ماهه دریافت کنید."
+
+msgid "peyvand2_des"
+msgstr "با پس انداز ماهیانه یا سالانه پس از گذشت 5 تا 10 سال از تسهیلات 4 درصدی تا سقف 80 میلیون تومان با بازپرداخت 60 ماهه برخوردار شوید"
+
